@@ -1,0 +1,243 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }
+
+         .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>stormfall.sikuli</h2> <a href="stormfall.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+<span class="kw">import</span> time
+<span class="kw">import</span> array
+
+Settings.LogTime = True
+
+running = True
+shouldTeachDragon = False
+artifcatsToSell = [<img src="1495845112956.png" />, <img src="1495845279675.png" />, <img src="1495845348616.png" />, Pattern(<img src="1496619723416.png" />).similar(<span class="dig">0.90</span>), Pattern(<img src="1496619844491.png" />).similar(<span class="dig">0.90</span>)]
+
+<span class="cmt">#Region.setAutoWaitTimeout(3)</span>
+setFindFailedResponse(SKIP)
+
+<span class="kw">def</span> runHotkey(event):
+    <span class="kw">global</span> running
+    running = False
+
+<span class="kw">def</span> closeMessageBoxes():
+    <span class="kw">try</span>:
+        closeButtons = findAll(<img src="1496662347433.png" />)
+        <span class="kw">if</span> closeButtons <span class="kw">is</span> <span class="kw">not</span> None:
+            <span class="kw">for</span> x <span class="kw">in</span> sorted(closeButtons, key = <span class="kw">lambda</span> m:m.y, reverse = True):
+                Debug.log(<span class="dig">1</span>, <span class="str">'Close button at %d:%d'</span>, x.x, x.y)
+                <span class="skw">click</span>(x)
+    <span class="kw">except</span> FindFailed:
+        Debug.log(<span class="dig">1</span>, <span class="str">'No message boxes found'</span>)
+
+<span class="kw">def</span> closeMessageBox():
+    <span class="skw">click</span>(Pattern(<img src="1495950088485.png" />).similar(<span class="dig">0.80</span>))
+    waitVanish(Pattern(<img src="1495950088485.png" />).similar(<span class="dig">0.80</span>))
+
+<span class="kw">def</span> clickOrIgnore(pattern):
+    <span class="kw">try</span>:
+        <span class="skw">click</span>(pattern)
+    <span class="kw">except</span> FindFailed:
+        Debug.log(<span class="dig">1</span>, <span class="str">'Pattern not found'</span>)
+
+Env.addHotkey(Key.F1, KeyModifier.SHIFT, runHotkey)
+
+<span class="cmt"># exists(Pattern("1495837589459.png").similar(0.90)) and</span>
+<span class="kw">if</span> exists(Pattern(<img src="1496662582187.png" />).similar(<span class="dig">0.90</span>)):
+    <span class="skw">click</span>(Pattern(<img src="1496662582187.png" />).similar(<span class="dig">0.90</span>));
+
+Debug.log(<span class="dig">1</span>, <span class="str">'Entering main loop'</span>)
+
+<span class="kw">while</span> (running):
+    closeMessageBoxes()
+
+    <span class="cmt">#  Dragon ************************************</span>
+    <span class="kw">if</span> exists(Pattern(<img src="1495977053398.png" />).similar(<span class="dig">0.90</span>)):
+        Debug.log(<span class="dig">1</span>, <span class="str">'Open dragon options'</span>)
+        clickOrIgnore(Pattern(<img src="1495977053398.png" />).similar(<span class="dig">0.90</span>))
+
+        <span class="kw">if</span> exists(Pattern(<img src="1495921176461.png" />).similar(<span class="dig">0.90</span>)):
+            <span class="skw">click</span>(<img src="1495921238338.png" />);
+
+        <span class="cmt">#if exists(Pattern("1495921762111.png").similar(0.90)):</span>
+        clickOrIgnore(<img src="1495977251471.png" />);
+
+        <span class="kw">while</span> (exists(<img src="1495925875302.png" />) <span class="kw">and</span> running):
+            clickOrIgnore(Pattern(<img src="1495925875302.png" />).targetOffset(<span class="dig">81</span>,-<span class="dig">256</span>));
+            <span class="kw">if</span> exists(Pattern(<img src="1495925222870.png" />).similar(<span class="dig">0.90</span>)):
+                clickOrIgnore(Pattern(<img src="1495925248280.png" />).similar(<span class="dig">0.90</span>));
+
+        <span class="kw">if</span> exists(Pattern(<img src="1495925998593.png" />).similar(<span class="dig">0.90</span>).targetOffset(-<span class="dig">41</span>,<span class="dig">11</span>)):
+            clickOrIgnore(Pattern(<img src="1495925998593.png" />).similar(<span class="dig">0.90</span>).targetOffset(-<span class="dig">41</span>,<span class="dig">11</span>));
+            shouldTeachDragon = True
+            mouseMove(<span class="dig">0</span>, <span class="dig">53</span>);
+
+        <span class="kw">while</span> (exists(Pattern(<img src="1495925998593.png" />).similar(<span class="dig">0.90</span>)) <span class="kw">and</span> shouldTeachDragon <span class="kw">and</span> running):
+            <span class="cmt">#skillIcon = "1495927968714.png";</span>
+            skillIcon = Pattern(<img src="1496661884435.png" />).similar(<span class="dig">0.90</span>);
+            <span class="cmt">#actionButtonIcon = Pattern("1495928189897.png").similar(0.90);</span>
+            actionButtonIcon = <img src="1496661614120.png" />;
+            <span class="kw">if</span> exists(skillIcon):
+                clickOrIgnore(skillIcon);
+                <span class="kw">if</span> exists(actionButtonIcon):
+                    clickOrIgnore(actionButtonIcon);
+                    closeMessageBox()
+                <span class="kw">else</span>:
+                    closeMessageBox()
+                    shouldTeachDragon = False;
+
+            mouseMove(<span class="dig">0</span>, <span class="dig">321</span>);
+            mouseDown(Button.LEFT);
+            mouseMove(<span class="dig">0</span>, -<span class="dig">321</span>);
+            mouseUp(Button.LEFT);
+
+    <span class="cmt"># Mara ************************************    </span>
+
+    <span class="kw">if</span> exists(Pattern(<img src="1495977592064.png" />).similar(<span class="dig">0.90</span>)):
+        clickOrIgnore(Pattern(<img src="1495977592064.png" />).similar(<span class="dig">0.90</span>))
+        <span class="skw">wait</span>(<img src="1495977703811.png" />)
+        clickOrIgnore(Pattern(<img src="1495977800193.png" />).similar(<span class="dig">0.90</span>).targetOffset(<span class="dig">63</span>,<span class="dig">18</span>))
+        closeMessageBox()
+
+    <span class="kw">if</span> exists(Pattern(<img src="1495977899878.png" />).similar(<span class="dig">0.90</span>)):
+        clickOrIgnore(Pattern(<img src="1495977899878.png" />).similar(<span class="dig">0.90</span>))
+        <span class="kw">while</span> <span class="kw">not</span> exists(<img src="1495978835728.png" />) <span class="kw">and</span> running:
+            clickOrIgnore(<img src="1495978878504.png" />)
+
+        hover(<img src="1495978835728.png" />)
+        mouseMove(-<span class="dig">160</span>, <span class="dig">0</span>);
+
+        <span class="kw">while</span> running:
+
+            <span class="kw">if</span> exists(<img src="1495978957274.png" />):
+                clickOrIgnore(<img src="1495978957274.png" />)
+                <span class="skw">wait</span>(<img src="1495979545073.png" />)
+                clickOrIgnore(<img src="1495979545073.png" />)
+                <span class="kw">break</span>
+
+            mouseMove(<span class="dig">0</span>, <span class="dig">321</span>);
+            mouseDown(Button.LEFT);
+            mouseMove(<span class="dig">0</span>, -<span class="dig">321</span>);
+            mouseUp(Button.LEFT);
+
+        closeMessageBox()
+
+
+
+
+<span class="cmt">#       if exists(Pattern("1495838297568.png").similar(0.90).targetOffset(-48,15)):</span>
+<span class="cmt">#           click(Pattern("1495838297568.png").similar(0.90).targetOffset(-48,15));</span>
+
+<span class="cmt">#            if exists(Pattern("1495839439508.png").similar(0.90).targetOffset(-2,144)):</span>
+ <span class="cmt">#               click(Pattern("1495839439508.png").similar(0.90).targetOffset(-2,144));</span>
+
+ <span class="cmt">#           while (exists(Pattern("1495839616610.png").similar(0.90)) and not exists(Pattern("1495840073273.png").similar(0.90)) </span>
+ <span class="cmt">#                   and running):</span>
+ <span class="cmt">#               click(Pattern("1495839616610.png").similar(0.90).targetOffset(300,300));</span>
+
+    <span class="cmt"># Artifacts ************************************ </span>
+
+
+    <span class="kw">if</span> exists(Pattern(<img src="1495844498166.png" />).similar(<span class="dig">0.93</span>)):
+        clickOrIgnore(Pattern(<img src="1495844498166.png" />).similar(<span class="dig">0.93</span>).targetOffset(-<span class="dig">15</span>,-<span class="dig">20</span>));
+
+        <span class="skw">wait</span>(Pattern(<img src="1496620744641.png" />).similar(<span class="dig">0.90</span>).targetOffset(-<span class="dig">42</span>,<span class="dig">35</span>))
+        clickOrIgnore(Pattern(<img src="1496620744641.png" />).similar(<span class="dig">0.90</span>).targetOffset(-<span class="dig">42</span>,<span class="dig">35</span>))
+
+        <span class="skw">wait</span>(Pattern(<img src="1496621224401.png" />).similar(<span class="dig">0.90</span>))
+        clickOrIgnore(Pattern(<img src="1495844758443.png" />).similar(<span class="dig">0.90</span>))
+
+        <span class="kw">for</span> art <span class="kw">in</span> artifcatsToSell:
+            <span class="kw">if</span> exists(art):
+                clickOrIgnore(art);
+                clickOrIgnore(<img src="1495845241022.png" />);
+                clickOrIgnore(<img src="1495845459491.png" />);
+                <span class="kw">break</span>;
+
+<span class="cmt">#        else: if exists("1495845279675.png"):</span>
+<span class="cmt">#            click("1495845279675.png");</span>
+<span class="cmt">#            click("1495845241022.png");</span>
+<span class="cmt">#            click("1495845459491.png");</span>
+<span class="cmt">#        else if exists("1495845348616.png"):</span>
+<span class="cmt">#            click("1495845348616.png");</span>
+<span class="cmt">#            click("1495845241022.png");</span>
+<span class="cmt">#            click("1495845459491.png");        </span>
+<span class="cmt">#        else if exists(Pattern("1496619723416.png").similar(0.90))</span>
+<span class="cmt">#            click(Pattern("1496619723416.png").similar(0.90));</span>
+<span class="cmt">#            click("1495845241022.png");</span>
+<span class="cmt">#            click("1495845459491.png");</span>
+<span class="cmt">#        else if exists(Pattern("1496619844491.png").similar(0.90))</span>
+<span class="cmt">#            click(Pattern("1496619844491.png").similar(0.90));</span>
+<span class="cmt">#            click("1495845241022.png");</span>
+<span class="cmt">#            click("1495845459491.png");           </span>
+
+    time.<span class="skw">sleep</span>(<span class="dig">3</span>)
+</pre>
+</body>
+</html>
